@@ -1,10 +1,11 @@
 apiVersion: backstage.io/v1alpha1
-kind: Component
+kind: API
 metadata:
   name: openai-DM-AuthService
   annotations:
     github.com/project-slug: codeiain/openai-DM-AuthService
 spec:
-  type: other
+  type: openapi
   lifecycle: unknown
   owner: staff
+  system: openAI-DM
