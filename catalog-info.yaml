@@ -8,5 +8,5 @@ spec:
   type: openapi
   lifecycle: unknown
   owner: staff
-  definition:
-    $text: https://petstore.swagger.io/v2/swagger.json
+  definition |
+  
