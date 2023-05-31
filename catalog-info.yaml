@@ -9,4 +9,5 @@ spec:
   lifecycle: production
   owner: openai
   system: OpenAI-DM
-  
+  providesApis:
+    - auth-service
