@@ -9,3 +9,5 @@ spec:
   lifecycle: unknown
   owner: openai
   system: OpenAI-DM
+  providesApis:
+    - auth-service
