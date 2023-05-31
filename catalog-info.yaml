@@ -8,3 +8,4 @@ spec:
   type: api
   lifecycle: unknown
   owner: openai
+  system: OpenAI-DM
