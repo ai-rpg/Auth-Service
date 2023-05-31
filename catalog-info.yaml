@@ -8,4 +8,3 @@ spec:
   type: openapi
   lifecycle: unknown
   owner: staff
-  system: openAI-DM
