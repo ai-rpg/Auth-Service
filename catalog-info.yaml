@@ -9,5 +9,5 @@ spec:
   lifecycle: unknown
   owner: staff
   definition:
-    $text: https://petstore.swagger.io/v2/swagger.json
+    $text: /swagger.json
   
