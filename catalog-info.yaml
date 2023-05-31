@@ -5,6 +5,6 @@ metadata:
   annotations:
     github.com/project-slug: codeiain/openai-DM-AuthService
 spec:
-  type: other
+  type: api
   lifecycle: unknown
   owner: openai
