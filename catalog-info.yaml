@@ -8,6 +8,7 @@ spec:
   type: openapi
   lifecycle: unknown
   owner: staff
+  system: openai-DM
   definition:
     $text: /swagger.json
   
