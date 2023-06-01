@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: openai-DM-AuthService
+  name: openai-DM-Auth-Service
   annotations:
     github.com/project-slug: codeiain/openai-DM-AuthService
 spec:
@@ -11,5 +11,4 @@ spec:
   system: openai-DM
   definition:
     $text: /swagger.json
-  consumesApis: ['openai-DM-AuthService']
   
