@@ -2,9 +2,18 @@
 apiVersion: backstage.io/v1alpha1
 kind: System
 metadata:
+  name: openai
+spec:
+  owner: me
+---
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
   name: openai-dm-auth
 spec:
   owner: me
+  system: openai
 ---
 ---
 apiVersion: backstage.io/v1alpha1
