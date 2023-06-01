@@ -1,16 +1,37 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: openai-dm-auth
+spec:
+  owner: me
+---
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: openai-dm-auth-server
+spec:
+  type: service
+  lifecycle: unknown
+  owner: me
+  system: openai-dm-auth
+  providesApi:
+    - openai-dm-auth-api
+---
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: openai-DM-Auth-Service
+  name: openai-dm-auth-api
   annotations:
     github.com/project-slug: codeiain/openai-DM-AuthService
 spec:
   type: openapi
   lifecycle: unknown
   owner: staff
-  system: openai-DM
+  system: openai-dm-auth
   definition:
     $text: /swagger.json
   providesApis: 
-    - openai-DM-Auth-Service
+    - openai-dm-auth-api
   
