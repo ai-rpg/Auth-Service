@@ -11,4 +11,5 @@ spec:
   system: openai-DM
   definition:
     $text: /swagger.json
+  providesApis: ['openai-DM-Auth-Service']
   
