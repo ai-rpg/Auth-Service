@@ -25,7 +25,7 @@ spec:
   dependsOn:
     - resource:couchbase
     - resource:prometheus
-  providesApi:
+  providesApis:
     - openai-dm-auth-api
 ---
 ---
