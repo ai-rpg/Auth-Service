@@ -22,11 +22,11 @@ spec:
   lifecycle: unknown
   owner: me
   system: openai-dm
-  providesApi:
-    - openai-dm-auth-api
   dependsOn:
     - resource:couchbase
     - resource:prometheus
+  providesApi:
+    - openai-dm-auth-api
 ---
 ---
 apiVersion: backstage.io/v1alpha1
@@ -39,7 +39,7 @@ metadata:
 spec:
   type: openapi
   lifecycle: unknown
-  owner: staff
+  owner: me
   system: openai-dm
   definition:
     $text: /swagger.json
