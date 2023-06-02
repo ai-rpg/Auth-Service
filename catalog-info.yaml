@@ -24,11 +24,9 @@ spec:
   system: openai-dm
   providesApi:
     - openai-dm-auth-api
-  consumesApis:
-    - openai-dm-auth-api
   dependsOn:
-    - resource:openai-dm/couchbase
-    - resource:openai-dm/prometheus
+    - resource:couchbase
+    - resource:prometheus
 ---
 ---
 apiVersion: backstage.io/v1alpha1
