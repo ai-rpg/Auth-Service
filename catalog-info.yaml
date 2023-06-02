@@ -7,7 +7,7 @@ metadata:
   #   backstage.io/techdocs-ref: dir:.
   #   github.com/project-slug: codeiain/openai-DM-character-service
 spec:
-  owner: me
+  owner: iain
 ---
 ---
 apiVersion: backstage.io/v1alpha1
@@ -20,7 +20,7 @@ metadata:
 spec:
   type: service
   lifecycle: unknown
-  owner: me
+  owner: iain
   system: openai-dm
   dependsOn:
     - resource:couchbase
@@ -39,7 +39,7 @@ metadata:
 spec:
   type: openapi
   lifecycle: unknown
-  owner: me
+  owner: iain
   system: openai-dm
   definition:
     $text: /swagger.json
