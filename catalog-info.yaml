@@ -11,18 +11,6 @@ spec:
 ---
 ---
 apiVersion: backstage.io/v1alpha1
-kind: System
-metadata:
-  name: openai-dm-auth
-  annotations:
-    backstage.io/techdocs-ref: dir:.
-    github.com/project-slug: codeiain/openai-DM-AuthService
-spec:
-  owner: me
-  system: openai-dm
----
----
-apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: openai-dm-auth-server
@@ -36,6 +24,11 @@ spec:
   system: openai-dm
   providesApi:
     - openai-dm-auth-api
+  consumesApis:
+    - openai-dm-auth-api
+  dependsOn:
+    - couchbase
+    - prometheus
 ---
 apiVersion: backstage.io/v1alpha1
 kind: API
