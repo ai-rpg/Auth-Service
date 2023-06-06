@@ -1,5 +1,5 @@
 from dataclasses import dataclass
 
 @dataclass
-class TokenModel:
+class TokenDataModel:
    username: str | None = None

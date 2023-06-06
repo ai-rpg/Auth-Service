@@ -16,6 +16,7 @@ from adapter.auth_repository import AuthRepository
 from services.auth_service import AuthService
 from domain.token_model import TokenModel
 from domain.user_model import UserModel
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 PORT.info({"port": HTTPPORT})
@@ -70,5 +71,6 @@ async def read_own_items(
 ):
     return [{"item_id": "Foo", "owner": current_user.username}]
 
-
+if __name__ == "__main__":
+    uvicorn.run("bootstrap:app", host=HOST, port=int(HTTPPORT), log_level="info")
 

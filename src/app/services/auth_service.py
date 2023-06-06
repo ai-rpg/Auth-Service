@@ -5,7 +5,9 @@ from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from datetime import datetime, timedelta
 from domain.user_model import UserModel
-from fastapi import Depends
+from domain.token_data_model import TokenDataModel
+from fastapi import Depends, HTTPException, status
+import json
 
 class AuthService(IAuthService):
     def __init__(self, auth_repository):
@@ -36,13 +38,13 @@ class AuthService(IAuthService):
             expire = datetime.utcnow() + expires_delta
         else:
             expire = datetime.utcnow() + timedelta(minutes=15)
-        to_encode.update({"exp": expire})
+        to_encode.update({"exp": expire, "sub":str(data['sub'])})
         encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
         return encoded_jwt
     
     oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
     
-    async def get_current_user(self, token:str = Depends(oauth2_scheme)):
+    async def get_current_user(token:str = Depends(oauth2_scheme)):
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
@@ -50,18 +52,20 @@ class AuthService(IAuthService):
         )
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-            username: str = payload.get("sub")
-            if username is None:
+            details: str = payload.get("sub")
+            if details is None:
                 raise credentials_exception
-            token_data = TokenData(username=username)
+            details = details.replace("'",'"')
+            userdetails =json.loads(details)
+            token_data = TokenDataModel(username=userdetails['username'])
         except JWTError:
             raise credentials_exception
-        user = self.get_user(username=token_data.username)
-        if user is None:
-            raise credentials_exception
-        return user
+        #user = self.get_user(username=token_data.username['username'])
+        #if user is None:
+        #    raise credentials_exception
+        return token_data
 
-    async def get_current_active_user(self, current_user: UserModel):
+    async def get_current_active_user(self, current_user: UserModel = Depends(get_current_user) ):
         if current_user.disabled:
             raise HTTPException(status_code=400, detail="Inactive user")
         return current_user
