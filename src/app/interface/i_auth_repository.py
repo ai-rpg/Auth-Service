@@ -3,7 +3,7 @@ import abc
 class IAuthRepository(metaclass=abc.ABCMeta):
     
     @abc.abstractclassmethod
-    def get_user_by_email(self, email):
+    def get_user_by_username(self, email):
         raise NotImplementedError
 
     @abc.abstractclassmethod

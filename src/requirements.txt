@@ -29,3 +29,7 @@ prometheus_client
 python-dotenv
 starlette
 starlette_prometheus
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+uvicorn

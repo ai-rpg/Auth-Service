@@ -1,8 +1,10 @@
-from dataclasses import dataclass
-from typing import TYPE_CHECKING
+
+import uuid
+from dataclasses import dataclass, field
 
 @dataclass
 class UserModel:
-    Username: str = ""
-    password: str = ""
-    email: str = ""
+    username: str
+    email: str | None = None
+    full_name: str | None = None
+    disabled: bool | None = None
