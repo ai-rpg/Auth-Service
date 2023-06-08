@@ -5,7 +5,7 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from domain.user_model import UserModel
-
+from domain.create_user_model import CreateUserModel
 class IAuthService(metaclass=abc.ABCMeta):
     @abc.abstractclassmethod
     def verify_password(self, plain_password, hashed_password):
@@ -35,4 +35,8 @@ class IAuthService(metaclass=abc.ABCMeta):
     async def get_current_active_user(
         self, current_user: UserModel
     ):
+        raise NotImplementedError
+
+    @abc.abstractclassmethod
+    def create_user(self, new_user: CreateUserModel):
         raise NotImplementedError

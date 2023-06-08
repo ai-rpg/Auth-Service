@@ -6,6 +6,9 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from datetime import datetime, timedelta
 from domain.user_model import UserModel
 from domain.token_data_model import TokenDataModel
+from domain.create_user_model import CreateUserModel
+
+
 from fastapi import Depends, HTTPException, status
 import json
 
@@ -28,7 +31,7 @@ class AuthService(IAuthService):
         user = self.get_user(username)
         if not user:
             return False
-        if not self.verify_password(password, user[username]['hashed_password']):
+        if not self.verify_password(password, user.password):
             return False
         return user
         
@@ -63,9 +66,14 @@ class AuthService(IAuthService):
         #user = self.get_user(username=token_data.username['username'])
         #if user is None:
         #    raise credentials_exception
-        return token_data
+        return userdetails
 
     async def get_current_active_user(self, current_user: UserModel = Depends(get_current_user) ):
-        if current_user.disabled:
+        if current_user['disabled']:
             raise HTTPException(status_code=400, detail="Inactive user")
         return current_user
+
+    def create_user(self, new_user: CreateUserModel):
+        new_user.password = self.get_password_hash(new_user.password)
+        self.auth_repository.create_user(new_user)
+

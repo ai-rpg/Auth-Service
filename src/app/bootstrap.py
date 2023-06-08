@@ -1,4 +1,5 @@
 import uvicorn
+import json
 from config import BUILD_VERSION,HOST, METRICS_PATH, NAME, HTTPPORT, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 
 from datetime import datetime, timedelta
@@ -16,7 +17,7 @@ from adapter.auth_repository import AuthRepository
 from services.auth_service import AuthService
 from domain.token_model import TokenModel
 from domain.user_model import UserModel
-
+from domain.create_user_model import CreateUserModel
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 PORT.info({"port": HTTPPORT})
@@ -37,9 +38,15 @@ couchbaseRepo = CouchbaseRepository()
 authRepo = AuthRepository(couchbase_repository=couchbaseRepo)
 authService = AuthService(auth_repository=authRepo)
 
-@app.post("/")
+@app.get("/")
 def base_root(request: Request):
     pass
+
+@app.post("/createUser", response_model=TokenModel)
+def create_user(
+    new_user: Annotated[CreateUserModel, Depends()]
+):
+    authService.create_user(new_user)
 
 @app.post("/token", response_model=TokenModel)
 async def login_for_access_token(
@@ -54,7 +61,7 @@ async def login_for_access_token(
         )
     access_token_expires = timedelta(minutes=int(ACCESS_TOKEN_EXPIRE_MINUTES))
     access_token = authService.create_access_token(
-        data={"sub": user[form_data.username]}, expires_delta=access_token_expires
+        data={"sub": json.dumps(user.__dict__)}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -64,12 +71,10 @@ async def read_users_me(
 ):
     return current_user
 
+@app.get("/users/{username}")
+async def get_user_by_username(username:str):
+    return authService.get_user(username)
 
-@app.get("/users/me/items/")
-async def read_own_items(
-    current_user: Annotated[UserModel, Depends(authService.get_current_active_user)]
-):
-    return [{"item_id": "Foo", "owner": current_user.username}]
 
 if __name__ == "__main__":
     uvicorn.run("bootstrap:app", host=HOST, port=int(HTTPPORT), log_level="info")

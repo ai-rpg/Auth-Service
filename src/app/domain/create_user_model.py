@@ -3,9 +3,9 @@ import uuid
 from dataclasses import dataclass, field
 
 @dataclass
-class UserModel:
+class CreateUserModel:
     username: str
+    password: str
     email: str | None = None
     full_name: str | None = None
-    disabled: bool | None = None
-    password: str | None = None
+    disabled: bool = False
