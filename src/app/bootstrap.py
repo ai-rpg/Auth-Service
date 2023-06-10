@@ -1,6 +1,15 @@
 import uvicorn
 import json
-from config import BUILD_VERSION,HOST, METRICS_PATH, NAME, HTTPPORT, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from config import (
+    BUILD_VERSION,
+    HOST,
+    METRICS_PATH,
+    NAME,
+    HTTPPORT,
+    SECRET_KEY,
+    ALGORITHM,
+    ACCESS_TOKEN_EXPIRE_MINUTES,
+)
 
 from datetime import datetime, timedelta
 from flask import Flask, request
@@ -18,6 +27,7 @@ from services.auth_service import AuthService
 from domain.token_model import TokenModel
 from domain.user_model import UserModel
 from domain.create_user_model import CreateUserModel
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 PORT.info({"port": HTTPPORT})
@@ -38,15 +48,16 @@ couchbaseRepo = CouchbaseRepository()
 authRepo = AuthRepository(couchbase_repository=couchbaseRepo)
 authService = AuthService(auth_repository=authRepo)
 
+
 @app.get("/")
 def base_root(request: Request):
     pass
 
+
 @app.post("/createUser", response_model=TokenModel)
-def create_user(
-    new_user: Annotated[CreateUserModel, Depends()]
-):
+def create_user(new_user: Annotated[CreateUserModel, Depends()]):
     authService.create_user(new_user)
+
 
 @app.post("/token", response_model=TokenModel)
 async def login_for_access_token(
@@ -65,17 +76,18 @@ async def login_for_access_token(
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
+
 @app.get("/users/me/", response_model=UserModel)
 async def read_users_me(
     current_user: Annotated[UserModel, Depends(authService.get_current_active_user)]
 ):
     return current_user
 
+
 @app.get("/users/{username}")
-async def get_user_by_username(username:str):
+async def get_user_by_username(username: str):
     return authService.get_user(username)
 
 
 if __name__ == "__main__":
     uvicorn.run("bootstrap:app", host=HOST, port=int(HTTPPORT), log_level="info")
-

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class TokenDataModel:
-   username: str | None = None
+    username: str | None = None

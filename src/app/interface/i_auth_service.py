@@ -6,6 +6,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from domain.user_model import UserModel
 from domain.create_user_model import CreateUserModel
+
+
 class IAuthService(metaclass=abc.ABCMeta):
     @abc.abstractclassmethod
     def verify_password(self, plain_password, hashed_password):
@@ -20,9 +22,9 @@ class IAuthService(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractclassmethod
-    def authenticate_user(self, db, username:str, password:str):
+    def authenticate_user(self, db, username: str, password: str):
         raise NotImplementedError
-    
+
     @abc.abstractclassmethod
     def create_access_token(self, data: dict, expires_delta: timedelta | None = None):
         raise NotImplementedError
@@ -32,9 +34,7 @@ class IAuthService(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractclassmethod
-    async def get_current_active_user(
-        self, current_user: UserModel
-    ):
+    async def get_current_active_user(self, current_user: UserModel):
         raise NotImplementedError
 
     @abc.abstractclassmethod
