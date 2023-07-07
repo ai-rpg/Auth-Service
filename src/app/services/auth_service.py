@@ -18,7 +18,7 @@ class AuthService(IAuthService):
     def __init__(self, i_auth_repository: IAuthRepository):
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         self.oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-        self.auth_repository = auth_repository
+        self.auth_repository = i_auth_repository
 
     def verify_password(self, plain_password, hashed_password):
         return self.pwd_context.verify(plain_password, hashed_password)

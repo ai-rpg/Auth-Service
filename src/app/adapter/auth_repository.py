@@ -6,7 +6,7 @@ from domain.user_model import UserModel
 
 
 class AuthRepository(IAuthRepository):
-    def __init__(self, i_couchbase_repository: ICouchbaseRepository()):
+    def __init__(self, i_couchbase_repository: ICouchbaseRepository):
         self.couchbase_repository = i_couchbase_repository
 
     def get_user_by_username(self, username):

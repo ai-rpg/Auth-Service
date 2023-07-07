@@ -7,9 +7,9 @@ import json
 
 from config import CB_USERNAME, CB_PASSWORD, CB_BUCKET_NAME, CB_COLLECTION, CB_CLUSTER
 from logger import log
+from interface.i_couchbase_repository import ICouchbaseRepository
 
-
-class CouchbaseRepository:
+class CouchbaseRepository(ICouchbaseRepository):
     def __init__(self):
         auth = PasswordAuthenticator(CB_USERNAME, CB_PASSWORD)
         timeout_opts = ClusterTimeoutOptions(
@@ -29,3 +29,4 @@ class CouchbaseRepository:
             )
         except QueryIndexAlreadyExistsException:
             log.warning("Index already exists")
+

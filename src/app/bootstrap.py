@@ -45,8 +45,8 @@ app.add_middleware(PrometheusMiddleware)
 app.add_route(("/" + METRICS_PATH), metrics)
 
 couchbaseRepo = CouchbaseRepository()
-authRepo = AuthRepository(couchbase_repository=couchbaseRepo)
-authService = AuthService(auth_repository=authRepo)
+authRepo = AuthRepository(i_couchbase_repository=couchbaseRepo)
+authService = AuthService(i_auth_repository=authRepo)
 
 
 @app.get("/")
