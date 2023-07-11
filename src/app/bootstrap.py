@@ -10,6 +10,7 @@ from config import (
     ALGORITHM,
     ACCESS_TOKEN_EXPIRE_MINUTES,
 )
+from logger import log
 
 from datetime import datetime, timedelta
 from flask import Flask, request
@@ -28,6 +29,7 @@ from domain.token_model import TokenModel
 from domain.user_model import UserModel
 from domain.create_user_model import CreateUserModel
 
+log.info("Application Starting up")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 PORT.info({"port": HTTPPORT})
