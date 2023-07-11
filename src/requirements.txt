@@ -33,3 +33,4 @@ python-jose[cryptography]
 passlib[bcrypt]
 python-multipart
 uvicorn
+python-logging-loki
