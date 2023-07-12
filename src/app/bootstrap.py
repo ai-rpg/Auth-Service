@@ -15,12 +15,14 @@ from logger import log
 from datetime import datetime, timedelta
 from flask import Flask, request
 from typing import Annotated
-from fastapi import FastAPI, Request, Depends, HTTPException, status
+from fastapi import FastAPI, Request, Depends, HTTPException, status, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
+from starlette.status import HTTP_200_OK
+
 from starlette_prometheus import metrics, PrometheusMiddleware
-from metrics import PORT
+from metrics import PORT, NEW_USER_ENDPOINT_CALLED
 
 from adapter.couchbase_repository import CouchbaseRepository
 from adapter.auth_repository import AuthRepository
@@ -60,7 +62,9 @@ def base_root(request: Request):
 
 @app.post("/createUser", response_model=TokenModel)
 def create_user(new_user: Annotated[CreateUserModel, Depends()]):
+    NEW_USER_ENDPOINT_CALLED.inc()
     authService.create_user(new_user)
+    return Response(status_code=HTTP_200_OK)
 
 
 @app.post("/token", response_model=TokenModel)
