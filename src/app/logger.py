@@ -2,10 +2,10 @@ import logging
 import logging.config
 import logging_loki
 from os import path
-from config import NAME
+from config import NAME, LOKIURL
 
 handler = logging_loki.LokiHandler(
-    url="https://3100-airpg-airpg-nu4x67nmg0j.ws-eu101.gitpod.io/loki/api/v1/push", 
+    url=LOKIURL + "/loki/api/v1/push", 
     tags={"application": NAME},
     version="1",
 )

@@ -29,11 +29,8 @@ from domain.token_model import TokenModel
 from domain.user_model import UserModel
 from domain.create_user_model import CreateUserModel
 
-log.info("Application Starting up", extra={"tags": {"service": NAME}})
-log.error(
-    "Something else happened", 
-    extra={"tags": {"service": NAME}}
-)
+log.debug("Application Starting up", extra={"tags": {"application": NAME}})
+
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -97,4 +94,4 @@ async def get_user_by_username(username: str):
 
 
 if __name__ == "__main__":
-    uvicorn.run("bootstrap:app", host=HOST, port=int(HTTPPORT), log_level="info")
+    uvicorn.run("bootstrap:app", host=HOST, port=int(HTTPPORT), log_level="debug")
