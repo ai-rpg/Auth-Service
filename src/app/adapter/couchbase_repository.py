@@ -9,6 +9,7 @@ from config import CB_USERNAME, CB_PASSWORD, CB_BUCKET_NAME, CB_COLLECTION, CB_C
 from logger import log
 from interface.i_couchbase_repository import ICouchbaseRepository
 
+
 class CouchbaseRepository(ICouchbaseRepository):
     def __init__(self):
         auth = PasswordAuthenticator(CB_USERNAME, CB_PASSWORD)
@@ -29,4 +30,3 @@ class CouchbaseRepository(ICouchbaseRepository):
             )
         except QueryIndexAlreadyExistsException:  # noqa: F821
             log.warning("Index already exists")
-
